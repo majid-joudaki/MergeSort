@@ -1,34 +1,36 @@
-# sort a list based on merge_sort
-def merge_sort(A):
-    if len(A) > 1:
-        mid = len(A) // 2
-        L = A[:mid]
-        R = A[mid:]
-        merge_sort(L)
-        merge_sort(R)
-        i = j = k = 0
-        while i < len(L) and j < len(R):
-            if L[i] < R[j]:
-                A[k] = L[i]
-                i += 1
-            else:
-                A[k] = R[j]
-                j += 1
-            k += 1
-        while i < len(L):
-            A[k] = L[i]
+# merge two sorted list -> sorted list
+def Merge(A,B):
+    C = []
+    i = j = 0
+    while i < len(A) and j < len(B):
+        if A[i] < B[j]:
+            C.append(A[i])
             i += 1
-            k += 1
-        while j < len(R):
-            A[k] = R[j]
+        else:
+            C.append(B[j])
             j += 1
-            k += 1
-    return A
+    while i < len(A):
+        C.append(A[i])
+        i += 1
+    while j < len(B):
+        C.append(B[j])
+        j += 1
+    return C
+
+# sort a list based on Merge sort
+def MergeSort(A):
+    if len(A) <= 1:
+        return A
+    else:
+        mid = len(A) // 2
+        left = MergeSort(A[:mid])
+        right = MergeSort(A[mid:])
+        return Merge(left, right)
 
 # main function
 def main():
     A = [10,8,5,7,3,4,6,2,9,1]
-    print(merge_sort(A))
+    print(MergeSort(A))
 
 if __name__ == "__main__":
     main()
